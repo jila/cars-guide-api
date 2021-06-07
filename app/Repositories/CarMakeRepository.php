@@ -14,11 +14,17 @@ class CarMakeRepository extends BaseRepository implements CarMakeRepositoryInter
     /**
      * gets an string and return an array of carMakes that has similar name
      * this method will return a key => value array
-     * @param string $carMake
+     * @param array $attributes
      * @return array
      */
-    public function getCarMakes(string $carMake): array
+    public function getCarMakes(array $attributes): array
     {
+        $carMakeModel = $this->model->query();
 
+        if (isset($attributes['make'])) {
+            $carMakeModel = $carMakeModel->where('make', 'like', '%' . $attributes['make'] . '%');
+        }
+
+        return $carMakeModel->get()->toArray();
     }
 }

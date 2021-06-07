@@ -3,5 +3,5 @@ namespace App\Contracts;
 
 interface CarMakeRepositoryInterface
 {
-    public function getCarMakes(string $carMake): array;
+    public function getCarMakes(array $attributes): array;
 }
