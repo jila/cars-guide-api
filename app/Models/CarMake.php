@@ -10,6 +10,10 @@ class CarMake extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'make'
+    ];
+
     /**
      * @return HasMany
      */
