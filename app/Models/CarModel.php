@@ -10,7 +10,10 @@ class CarModel extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'key';
+    protected $fillable = [
+        'car_make_id',
+        'model'
+    ];
 
     /**
      * Get the CarMake that owns the carModel.

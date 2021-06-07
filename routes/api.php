@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/car-make', [\App\Http\Controllers\CarMakeController::class, 'addCarMake']);
 Route::get('/car-make', [\App\Http\Controllers\CarMakeController::class, 'getCarMakes']);
+
+Route::post('/car-model', [\App\Http\Controllers\CarModelController::class, 'addCarModel']);
+Route::get('/car-model', [\App\Http\Controllers\CarModelController::class, 'getCarModel']);
