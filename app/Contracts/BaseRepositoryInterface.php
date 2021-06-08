@@ -13,14 +13,16 @@ interface BaseRepositoryInterface
 
     /**
      * @param array $attributes
+     * @param array $condition
      * @return bool
      */
-    public function update(array $attributes): Bool;
+    public function update(array $attributes, array $condition): int;
 
     /**
+     * @param array $condition
      * @return bool
      */
-    public function delete(): bool;
+    public function delete(array $condition): bool;
 
     /**
      * @return array

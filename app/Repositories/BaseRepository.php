@@ -8,24 +8,50 @@ class BaseRepository implements BaseRepositoryInterface
 {
     protected $model;
 
+    /**
+     * BaseRepository constructor.
+     * @param Model $model
+     */
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
 
+    /**
+     * @param array $attributes
+     * @return Model
+     */
     public function create(array $attributes): Model
     {
         return $this->model->create($attributes);
     }
 
-    public function update(array $attributes): bool
+    /**
+     * @param array $attributes
+     * @param array $condition
+     * @return int
+     */
+    public function update(array $attributes, array $condition): int
     {
-        // TODO: Implement update() method.
+        $query = $this->model->query();
+
+        foreach ($condition as $field => $value) {
+            if (!is_null($value)) {
+                $query = $query->where($field, $value);
+            }
+        }
+        return $query->update($attributes);
     }
 
-    public function delete(): bool
+    public function delete(array $condition): bool
     {
-        // TODO: Implement delete() method.
+        $query = $this->model->query();
+
+        foreach ($condition as $field => $value) {
+            if (!is_null($value)) {
+                $query = $query->where($field, $value);
+            }
+        }
     }
 
     public function get(): array

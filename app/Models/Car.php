@@ -10,6 +10,16 @@ class Car extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'key';
+
+    protected $fillable = [
+        'id',
+        'car_make_id',
+        'car_model_id',
+        'year',
+        'variant'
+    ];
+
     /**
      * Get the CarMake that owns the car.
      * @return BelongsTo

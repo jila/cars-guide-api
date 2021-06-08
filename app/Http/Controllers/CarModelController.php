@@ -53,7 +53,7 @@ class CarModelController extends Controller
 
         $carModels = $carModel->getCarModels($attributes);
 
-        // The request only needs to make names. It is used by UI type ahead
+        // The request only needs to get model names. It is used by UI type ahead
         if (!is_null($request->input('beautify'))) {
             $result = [];
             foreach ($carModels as $carModel) {
