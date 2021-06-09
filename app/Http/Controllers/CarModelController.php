@@ -23,25 +23,35 @@ class CarModelController extends Controller
         if (is_null($attributes['car_make_id'])) {
             return response()->json([
                     'result' => 'error',
-                    'message' => 'make_id is empty'
-                ]
+                    'message' => 'Please provide Make'
+                ], 400
             );
         }
 
+        if (is_null($attributes['model'])) {
+            return response()->json([
+                'result' => 'error',
+                'message' => 'model is empty'
+            ], 400
+            );
+        }
         try {
             $newCarModel = $carModel->create($attributes);
         } catch (\Exception $exception) {
             return response()->json([
                     'result' => 'error',
                     'message' => $exception->getMessage()
-                ]
+                ], 500
             );
         }
 
         return response()->json([
             'result' => 'success',
             'message' => 'Model creates successfully',
-            'model_id' => $newCarModel->id
+            'data' => [
+                'value' => $newCarModel->id,
+                'label' => $attributes['model']
+            ]
         ]);
     }
 
@@ -57,7 +67,10 @@ class CarModelController extends Controller
         if (!is_null($request->input('beautify'))) {
             $result = [];
             foreach ($carModels as $carModel) {
-                $result[$carModel['id']] = $carModel['model'];
+                $result[] = [
+                    'value' => $carModel['id'],
+                    'label' => $carModel['model']
+                ];
                 return response()->json($result);
             }
         }
