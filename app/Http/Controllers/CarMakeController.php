@@ -21,20 +21,31 @@ class CarMakeController extends Controller
         $attributes = [];
         $attributes['make'] = $request->input('make');
 
+        if (is_null($attributes['make'])) {
+            return response()->json([
+                    'result' => 'error',
+                    'message' => 'Make cannot be empty'
+                ], 400
+            );
+        }
+
         try {
             $newCarMake = $carMake->create($attributes);
         } catch (\Exception $exception) {
             return response()->json([
                 'result' => 'error',
                 'message' => $exception->getMessage()
-                ]
+                ], 500
             );
         }
 
         return response()->json([
             'result' => 'success',
             'message' => 'Make creates successfully',
-            'make_id' => $newCarMake->id
+            'data' => [
+                'value' => $newCarMake->id,
+                'label' => $attributes['make']
+                ]
         ]);
     }
 
@@ -57,9 +68,13 @@ class CarMakeController extends Controller
         if (!is_null($request->input('beautify'))) {
             $result = [];
             foreach ($carMakes as $carMake) {
-                $result[$carMake['id']] = $carMake['make'];
-                return response()->json($result);
+                $result[] = [
+                    'value' => $carMake['id'],
+                    'label' => $carMake['make']
+                ];
+
             }
+            return response()->json($result);
         }
 
         // return every thing. it can be used by the list of all the car makes
