@@ -41,7 +41,7 @@ class CarMakeController extends Controller
 
         return response()->json([
             'result' => 'success',
-            'message' => 'Make creates successfully',
+            'message' => 'Make created successfully',
             'data' => [
                 'value' => $newCarMake->id,
                 'label' => $attributes['make']
