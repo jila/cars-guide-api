@@ -26,6 +26,11 @@ class CarRepository extends BaseRepository implements CarRepositoryInterface
         parent::__construct($model);
     }
 
+    /**
+     * @param array $attributes
+     * @param array $pagination
+     * @return array
+     */
     public function findCars(array $attributes = [], array $pagination = []): array
     {
         $carQuery = $this->model->query();
@@ -59,6 +64,10 @@ class CarRepository extends BaseRepository implements CarRepositoryInterface
         ];
     }
 
+    /**
+     * @param array $attributes
+     * @return Model
+     */
     public function create(array $attributes): Model
     {
         $make = $this->carMake->find($attributes['car_make_id']);

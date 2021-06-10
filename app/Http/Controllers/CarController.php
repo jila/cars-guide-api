@@ -31,7 +31,7 @@ class CarController extends Controller
             return response()->json([
                     'result' => 'error',
                     'message' => 'make_id is empty'
-                ]
+                ], 400
             );
         }
 
@@ -39,7 +39,7 @@ class CarController extends Controller
             return response()->json([
                     'result' => 'error',
                     'message' => 'model_id is empty'
-                ]
+                ], 400
             );
         }
 
