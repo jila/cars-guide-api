@@ -54,7 +54,7 @@ class CarRepository extends BaseRepository implements CarRepositoryInterface
         }
 
         return [
-            'cars' => $cars->toArray(),
+            'rows' => $cars->toArray(),
             'total' => $totalNumber
         ];
     }
