@@ -52,10 +52,20 @@ class BaseRepository implements BaseRepositoryInterface
                 $query = $query->where($field, $value);
             }
         }
+
+        return $query->delete();
     }
 
-    public function get(): array
+    public function get(array $attributes = []): array
     {
-        // TODO: Implement get() method.
+        $query = $this->model->query();
+
+        foreach ($attributes as $field => $attribute) {
+            if (!is_null($attribute)) {
+                $query = $query->where($field, $attribute);
+            }
+        }
+
+        return $query->get()->toArray();
     }
 }

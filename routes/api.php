@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//TODO: Use some form of the authentication for the car API
 //car-make like toyota
 Route::post('/car-make', [\App\Http\Controllers\CarMakeController::class, 'addCarMake']);
 Route::get('/car-make', [\App\Http\Controllers\CarMakeController::class, 'getCarMakes']);
@@ -28,5 +29,5 @@ Route::get('/car-model', [\App\Http\Controllers\CarModelController::class, 'getC
 
 Route::post('/car', [\App\Http\Controllers\CarController::class, 'addCar']);
 Route::get('/car', [\App\Http\Controllers\CarController::class, 'getCars']);
-Route::patch('/car/{key}', [\App\Http\Controllers\CarController::class, 'editCar']);
-Route::delete('/car/{key}', [\App\Http\Controllers\CarController::class, 'deleteCar']);
+Route::patch('/car/{id}', [\App\Http\Controllers\CarController::class, 'editCar']);
+Route::delete('/car/{id}', [\App\Http\Controllers\CarController::class, 'deleteCar']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\CarRepositoryInterface;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -12,13 +13,31 @@ use Illuminate\Http\Request;
  */
 class CarController extends Controller
 {
+    use ValidatesRequests;
+
     /**
      * @param CarRepositoryInterface $carRepository
      * @param Request                $request
      * @return JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function addCar(CarRepositoryInterface $carRepository, Request $request): JsonResponse
     {
+        try {
+            $this->validate($request, [
+                'id' => ['required'],
+                'year' => ['digits:4'],
+                'make_id' => ['required'],
+                'model_id' => ['required']
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'result' => 'error',
+                'message' => $e->getMessage()
+            ], 400
+            );
+        }
+
         $attributes = [
             'id' => $request->input('id'),
             'car_make_id' => $request->input('make_id'),
@@ -27,29 +46,13 @@ class CarController extends Controller
             'variant' => $request->input('variant'),
         ];
 
-        if (is_null($attributes['car_make_id'])) {
-            return response()->json([
-                    'result' => 'error',
-                    'message' => 'make_id is empty'
-                ], 400
-            );
-        }
-
-        if (is_null($attributes['car_model_id'])) {
-            return response()->json([
-                    'result' => 'error',
-                    'message' => 'model_id is empty'
-                ], 400
-            );
-        }
-
         try {
             $newCar = $carRepository->create($attributes);
         } catch (\Exception $exception) {
             return response()->json([
                     'result' => 'error',
                     'message' => $exception->getMessage()
-                ]
+                ], 500
             );
         }
 
@@ -88,21 +91,34 @@ class CarController extends Controller
     /**
      * @param CarRepositoryInterface $carRepository
      * @param Request                $request
-     * @param                        $key
+     * @param                        $id
      * @return JsonResponse
      */
-    public function editCar(CarRepositoryInterface $carRepository, Request $request, $key): JsonResponse
+    public function editCar(CarRepositoryInterface $carRepository, Request $request, $id): JsonResponse
     {
+        try {
+            $this->validate($request, [
+                'year' => ['digits:4'],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'result' => 'error',
+                'message' => $e->getMessage()
+            ], 400
+            );
+        }
+
         $attributes = [
-            'id' => $request->input('id'),
             'car_make_id' => $request->input('make_id'),
             'car_model_id' => $request->input('model_id'),
             'year' => $request->input('year'),
-            'variant' => $request->input('variant'),
+            'variant' => $request->input('variant')
         ];
 
+        $attributes = array_filter($attributes);
+
         try {
-            $carRepository->update($attributes, ['key' => $key]);
+            $carRepository->update($attributes, ['id' => $id]);
         } catch (\Exception $exception) {
             return response()->json([
                     'result' => 'error',
@@ -118,10 +134,18 @@ class CarController extends Controller
         );
     }
 
-    public function deleteCar(CarRepositoryInterface $carRepository, Request $request, $key): JsonResponse
+    public function deleteCar(CarRepositoryInterface $carRepository, $id): JsonResponse
     {
+        if (!$id) {
+            return response()->json([
+                    'result' => 'error',
+                    'message' => 'id is required'
+                ]
+            );
+        }
+
         try {
-            $carRepository->delete(['key' => $key]);
+            $carRepository->delete(['id' => $id]);
         } catch (\Exception $exception) {
             return response()->json([
                     'result' => 'error',

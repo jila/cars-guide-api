@@ -76,6 +76,6 @@ class CarRepository extends BaseRepository implements CarRepositoryInterface
         $model = $this->carModel->find($attributes['car_model_id']);
         $this->model->carModel()->associate($model);
 
-        return $this->model->create($attributes);
+        return $this->model->updateOrCreate($attributes);
     }
 }
