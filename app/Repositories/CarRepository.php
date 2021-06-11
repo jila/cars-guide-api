@@ -50,6 +50,10 @@ class CarRepository extends BaseRepository implements CarRepositoryInterface
             $carQuery = $carQuery->limit($pagination['limit'])->offset($offset);
         }
 
+        if (isset($pagination['order_by'])) {
+            $carQuery = $carQuery->orderBy($pagination['order_by']);// TODO: this should accept array
+        }
+
         $cars = $carQuery->get();
 
         // now it is time to loop through Collection and get carMake and carModel

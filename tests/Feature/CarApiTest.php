@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Contracts\CarMakeRepositoryInterface;
 use App\Contracts\CarModelRepositoryInterface;
 use App\Contracts\CarRepositoryInterface;
+use Database\Seeders\VehiclesSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App;
@@ -114,6 +115,24 @@ class CarApiTest extends TestCase
         ]);
 
         $this->assertEmpty($result);
+    }
+
+    public function test_get_cars_list()
+    {
+        try {
+            $this->seed(VehiclesSeeder::class);
+        } catch (\Exception $e) {
+            // it is the duplicate ID, if already seed run manually
+        }
+        $result = $this->json('GET', '/api/car',
+            [
+                'per_page' => 2,
+                'page'     => 2,
+                'order_by' => 'key'
+            ]);
+
+        $this->assertEquals(2, count($result->original['rows']));
+        $this->assertEquals(3, $result->original['rows'][0]['key']);
     }
 
     protected function create_new_car(): array

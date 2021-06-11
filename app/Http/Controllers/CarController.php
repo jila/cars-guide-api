@@ -81,7 +81,8 @@ class CarController extends Controller
         ];
         $pagination = [
             'limit' => $request->input('per_page', 10),
-            'page'  => $request->input('page', 1)
+            'page'  => $request->input('page', 1),
+            'order_by' => $request->input('order_by')
         ];
 
         $cars = $carRepository->findCars($attributes, $pagination);
