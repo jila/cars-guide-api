@@ -30,6 +30,13 @@ services:
     networks:
       - carsguide-network
 
+  redis:
+    image: redis:6.0
+    expose:
+        - "6379"
+    networks:
+        - carsguide-network
+
   nginx:
     image: nginx:alpine
     container_name: nginx
