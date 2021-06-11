@@ -19,7 +19,7 @@ class CarModelRepository extends BaseRepository implements CarModelRepositoryInt
     {
         $carModel = $this->model->query();
 
-        if (isset($attributes['make'])) {
+        if (isset($attributes['model'])) {
             $carModel = $carModel->where('model', 'like', '%' . $attributes['model'] . '%');
         }
 

@@ -58,7 +58,7 @@ class CarModelController extends Controller
     public function getCarModel(CarModelRepositoryInterface $carModel, Request $request): JsonResponse
     {
         $attributes = [];
-        $attributes['make'] = $request->input('make');
+        $attributes['model'] = $request->input('model');
         $attributes['car_make_id'] = $request->input('make_id');
 
         $carModels = $carModel->getCarModels($attributes);
