@@ -27,3 +27,8 @@ If you chose to bind to the local 3306 port, alternatively could run the followi
 - API authentication via JWT Token
 - Implement Redis cache
 - Implement a proper cache eviction
+
+## Routes
+* [List of the routes](apidocument.md)
+
+
