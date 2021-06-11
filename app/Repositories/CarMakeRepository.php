@@ -25,6 +25,6 @@ class CarMakeRepository extends BaseRepository implements CarMakeRepositoryInter
             $carMakeModel = $carMakeModel->where('make', 'like', '%' . $attributes['make'] . '%');
         }
 
-        return $carMakeModel->get()->toArray();
+        return $carMakeModel->orderBy('make')->get()->toArray();
     }
 }

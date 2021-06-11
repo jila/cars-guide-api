@@ -23,7 +23,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function create(array $attributes): Model
     {
-        return $this->model->create($attributes);
+        return $this->model->updateOrCreate($attributes);
     }
 
     /**

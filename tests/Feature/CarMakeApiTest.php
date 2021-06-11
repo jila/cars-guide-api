@@ -29,4 +29,16 @@ class CarMakeApiTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure(['*' => ['value', 'label']]);
     }
+
+    public function test_create_duplicate_car_make()
+    {
+        $carMakeNameRandom = 'test duplicate car make ' . bin2hex(random_bytes(5));
+
+        $response = $this->json('POST', '/api/car-make', ['make' => $carMakeNameRandom]);
+        $newRecordId = $response->original['data']['value'];
+
+        $this->json('POST', '/api/car-make', ['make' => $carMakeNameRandom])
+             ->assertStatus(200)
+             ->assertJsonFragment(['data' => ['value' => $newRecordId, 'label' => $carMakeNameRandom]]);
+    }
 }
