@@ -27,7 +27,7 @@ class CarModelRepository extends BaseRepository implements CarModelRepositoryInt
             $carModel = $carModel->where('car_make_id', $attributes['car_make_id']);
         }
 
-        return $carModel->get()->toArray();
+        return $carModel->orderBy('model')->get()->toArray();
     }
 
     /**
@@ -39,6 +39,6 @@ class CarModelRepository extends BaseRepository implements CarModelRepositoryInt
     {
         $make = $this->carMake->find($attributes['car_make_id']);
         $this->model->carMake()->associate($make);
-        return $this->model->create($attributes);
+        return $this->model->updateOrCreate($attributes);
     }
 }

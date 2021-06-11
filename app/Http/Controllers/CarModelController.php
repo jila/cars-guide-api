@@ -64,18 +64,13 @@ class CarModelController extends Controller
         $carModels = $carModel->getCarModels($attributes);
 
         // The request only needs to get model names. It is used by UI type ahead
-        if (!is_null($request->input('beautify'))) {
-            $result = [];
-            foreach ($carModels as $carModel) {
-                $result[] = [
-                    'value' => $carModel['id'],
-                    'label' => $carModel['model']
-                ];
-                return response()->json($result);
-            }
+        $result = [];
+        foreach ($carModels as $carModel) {
+            $result[] = [
+                'value' => $carModel['id'],
+                'label' => $carModel['model']
+            ];
         }
-
-        // return every thing. it can be used by the list of all the car models
-        return response()->json([$carModels]);
+        return response()->json($result);
     }
 }
