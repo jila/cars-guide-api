@@ -65,19 +65,14 @@ class CarMakeController extends Controller
         $carMakes = $carMake->getCarMakes($attributes);
 
         // The request only needs make names. It is used by UI type ahead
-        if (!is_null($request->input('beautify'))) {
-            $result = [];
-            foreach ($carMakes as $carMake) {
-                $result[] = [
-                    'value' => $carMake['id'],
-                    'label' => $carMake['make']
-                ];
+        $result = [];
+        foreach ($carMakes as $carMake) {
+            $result[] = [
+                'value' => $carMake['id'],
+                'label' => $carMake['make']
+            ];
 
-            }
-            return response()->json($result);
         }
-
-        // return every thing. it can be used by the list of all the car makes
-        return response()->json([$carMakes]);
+        return response()->json($result);
     }
 }
