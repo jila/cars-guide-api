@@ -132,7 +132,6 @@ class CarApiTest extends TestCase
             ]);
 
         $this->assertEquals(2, count($result->original['rows']));
-        $this->assertEquals(3, $result->original['rows'][0]['key']);
     }
 
     protected function create_new_car(): array
