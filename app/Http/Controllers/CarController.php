@@ -59,7 +59,7 @@ class CarController extends Controller
         return response()->json([
             'result' => 'success',
             'message' => 'Model creates successfully',
-            'new_car' => $newCar
+            'new_car' => array_merge($newCar->toArray(), ['car_make' => $newCar->carMake->make, 'car_model' => $newCar->carModel->model])
         ]);
     }
 
@@ -80,7 +80,7 @@ class CarController extends Controller
             'variant' => $request->input('variant'),
         ];
         $pagination = [
-            'limit' => $request->input('per_page', 10),
+            'limit' => $request->input('per_page', 200),
             'page'  => $request->input('page', 1),
             'order_by' => $request->input('order_by')
         ];
